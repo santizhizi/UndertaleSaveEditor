@@ -40,12 +40,12 @@ AboutDialog::AboutDialog(QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f
 YellowNamesDialog::YellowNamesDialog(MainWindow *mainWindow, QWidget *parent, Qt::WindowFlags f) : QDialog(parent, f)
 {
 	setModal(true);
-	setWindowTitle(tr("Tool for setting monster names yellow in credits"));
+    setWindowTitle(tr("结尾动画怪物黄名设置工具"));
 	setMinimumWidth(320);
 
-	QPushButton *checkAllButton = new QPushButton(tr("Check All"));
+    QPushButton *checkAllButton = new QPushButton(tr("全选"));
 	connect(checkAllButton, &QPushButton::clicked, this, &YellowNamesDialog::checkAll);
-	QPushButton *uncheckAllButton = new QPushButton(tr("Uncheck All"));
+    QPushButton *uncheckAllButton = new QPushButton(tr("全取消"));
 	connect(uncheckAllButton, &QPushButton::clicked, this, &YellowNamesDialog::uncheckAll);
 
 	QHBoxLayout *topLayout = new QHBoxLayout;
@@ -148,7 +148,7 @@ YellowNamesDialog::YellowNamesDialog(MainWindow *mainWindow, QWidget *parent, Qt
 	QScrollArea *scrollArea = new QScrollArea(this);
 	scrollArea->setWidget(scrollWindow);
 
-	QPushButton *closeButton = new QPushButton(tr("Close"));
+    QPushButton *closeButton = new QPushButton(tr("关闭"));
 	connect(closeButton, &QPushButton::clicked, this, &QDialog::close);
 
 	QHBoxLayout *bottomLayout = new QHBoxLayout;
