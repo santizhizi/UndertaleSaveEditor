@@ -33,44 +33,44 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	setWindowTitle(tr("%1 (v%2)").arg(QApplication::applicationName()).arg(QApplication::applicationVersion()));
 
 	// create actions
-	QAction *openFileAction = new QAction(tr("Open file"), this);
+    QAction *openFileAction = new QAction(tr("打开file"), this);
 	connect(openFileAction, &QAction::triggered, this, &MainWindow::openFile);
 
-	QAction *openIniAction = new QAction(tr("Open ini"), this);
+    QAction *openIniAction = new QAction(tr("打开ini"), this);
 	connect(openIniAction, &QAction::triggered, this, &MainWindow::openIni);
 
-	saveAction = new QAction(tr("Save"), this);
+    saveAction = new QAction(tr("保存"), this);
 	saveAction->setEnabled(false);
 	connect(saveAction, &QAction::triggered, this, &MainWindow::saveFile);
 
-	saveAsAction = new QAction(tr("Save As..."), this);
+    saveAsAction = new QAction(tr("保存为..."), this);
 	saveAsAction->setEnabled(false);
 	connect(saveAsAction, &QAction::triggered, this, &MainWindow::saveFileAs);
 
-	QAction *exitAction = new QAction(tr("Exit"), this);
+    QAction *exitAction = new QAction(tr("退出"), this);
 	connect(exitAction, &QAction::triggered, this, &MainWindow::close);
 
-	QAction *showDebugAction = new QAction(tr("Show Debug"), this);
+    QAction *showDebugAction = new QAction(tr("显示Debug"), this);
 	showDebugAction->setCheckable(true);
 	showDebugAction->setChecked(false);
 	connect(showDebugAction, &QAction::toggled, this, &MainWindow::showDebug);
 
-	QAction *showDogAction = new QAction(tr("Show Dog Shrine"), this);
+    QAction *showDogAction = new QAction(tr("显示狗神社"), this);
 	showDogAction->setCheckable(true);
 	showDogAction->setChecked(false);
 	connect(showDogAction, &QAction::toggled, this, &MainWindow::showDog);
 
 	YellowNamesDialog *yellowNames = new YellowNamesDialog(this, nullptr, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-	yellowNamesAction = new QAction(tr("Set monster names yellow"), this);
+    yellowNamesAction = new QAction(tr("设置结局怪物黄名"), this);
 	yellowNamesAction->setEnabled(false);
 	connect(yellowNamesAction, &QAction::triggered, yellowNames, &QDialog::show);
 
 	AboutDialog *about = new AboutDialog(this, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-	QAction *showAboutAction = new QAction(tr("About"), this);
+    QAction *showAboutAction = new QAction(tr("关于"), this);
 	connect(showAboutAction, &QAction::triggered, about, &QDialog::show);
 
 	// create menus for menubar
-	QMenu *fileMenu = menuBar()->addMenu(tr("File"));
+    QMenu *fileMenu = menuBar()->addMenu(tr("文件"));
 	fileMenu->addAction(openFileAction);
 	fileMenu->addAction(openIniAction);
 	fileMenu->addAction(saveAction);
@@ -78,14 +78,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
 
-	QMenu *optionMenu = menuBar()->addMenu(tr("Options"));
+    QMenu *optionMenu = menuBar()->addMenu(tr("选项"));
 	optionMenu->addAction(showDebugAction);
 	optionMenu->addAction(showDogAction);
 
-	QMenu *toolsMenu = menuBar()->addMenu(tr("Tools"));
+    QMenu *toolsMenu = menuBar()->addMenu(tr("工具"));
 	toolsMenu->addAction(yellowNamesAction);
 
-	QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
+    QMenu *helpMenu = menuBar()->addMenu(tr("帮助"));
 	helpMenu->addAction(showAboutAction);
 
 	// create list menu
@@ -98,12 +98,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	icons->setSpacing(5);
 	connect(icons, &QListWidget::currentItemChanged, this, &MainWindow::changePage);
 
-	buttons.append(new QListWidgetItem(QIcon(":/images/ico_player.png"), tr("Player"), icons));
-	buttons.append(new QListWidgetItem(QIcon(":/images/ico_toriel.png"), tr("Bosses"), icons));
-	buttons.append(new QListWidgetItem(QIcon(":/images/ico_napstablook.png"), tr("Monsters"), icons));
-	buttons.append(new QListWidgetItem(QIcon(":/images/ico_savepoint.png"), tr("Locations"), icons));
+    buttons.append(new QListWidgetItem(QIcon(":/images/ico_player.png"), tr("玩家"), icons));
+    buttons.append(new QListWidgetItem(QIcon(":/images/ico_toriel.png"), tr("角色"), icons));
+    buttons.append(new QListWidgetItem(QIcon(":/images/ico_napstablook.png"), tr("怪物"), icons));
+    buttons.append(new QListWidgetItem(QIcon(":/images/ico_savepoint.png"), tr("地点"), icons));
 	buttons.append(new QListWidgetItem(QIcon(":/images/ico_debug.png"), tr("Debug"), icons));
-	buttons.append(new QListWidgetItem(QIcon(":/images/ico_dogshrine.png"), tr("Dog Shrine"), icons));
+    buttons.append(new QListWidgetItem(QIcon(":/images/ico_dogshrine.png"), tr("狗狗神社"), icons));
 
 	foreach (QListWidgetItem *item, buttons)
 	{
@@ -193,7 +193,7 @@ void MainWindow::openFile()
 	if (checkIfFileSave())
 	{
 		// choose file
-		QString path = QFileDialog::getOpenFileName(this, tr("Open File"), workDir, QString("file (file*);;All Files (*)"));
+        QString path = QFileDialog::getOpenFileName(this, tr("打开文件"), workDir, QString("file (file*);;All Files (*)"));
 		if (path.isEmpty())
 		{
 			return;
@@ -206,7 +206,7 @@ void MainWindow::openFile()
 		if (!file.open(QFile::ReadOnly | QFile::Text))
 		{
 			QMessageBox::warning(this, QApplication::applicationName(),
-								 tr("Cannot read file %1:\n%2.")
+                                 tr("无法读取文件 %1:\n%2.")
 									 .arg(QDir::toNativeSeparators(path),
 										  file.errorString()));
 			return;
@@ -225,7 +225,7 @@ void MainWindow::openFile()
 		{
 			QMessageBox::warning(this, QApplication::applicationName(),
 								 tr("File %1\n"
-									"does not contain enough data or is incorrectly formated.")
+                                    "数据不完整或格式错误")
 								 .arg(QDir::toNativeSeparators(path)));
 			return;
 		}
@@ -259,7 +259,7 @@ void MainWindow::openIni()
 	if(checkIfIniSave())
 	{
 		// choose file
-		QString path = QFileDialog::getOpenFileName(this, tr("Open File"), workDir, QString("Ini File (*.ini);;All Files (*)"));
+        QString path = QFileDialog::getOpenFileName(this, tr("打开文件"), workDir, QString("Ini File (*.ini);;All Files (*)"));
 		if (path.isEmpty())
 		{
 			return;
@@ -377,8 +377,8 @@ bool MainWindow::checkIfFileSave()
 
 	const QMessageBox::StandardButton ret = QMessageBox::warning(
 		this, QApplication::applicationName(),
-		tr("The file has been modified.\n"
-		   "Do you want to save your changes?"),
+        tr("这个文件已经被修改过了。\n"
+           "要保存修改吗？"),
 		QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 	switch (ret)
 	{
@@ -402,8 +402,8 @@ bool MainWindow::checkIfIniSave()
 
 	const QMessageBox::StandardButton ret = QMessageBox::warning(
 		this, QApplication::applicationName(),
-		tr("The file has been modified.\n"
-		   "Do you want to save your changes?"),
+        tr("这个文件已经被修改过了。\n"
+           "要保存修改吗？"),
 		QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 	switch (ret)
 	{
@@ -425,7 +425,7 @@ void MainWindow::writeFile()
 	{
 		QMessageBox::warning(
 			this, QApplication::applicationName(),
-			tr("Cannot write file %1:\n%2.")
+            tr("无法读取文件 %1:\n%2.")
 				.arg(QDir::toNativeSeparators(filePath), file.errorString()));
 		return;
 	}
@@ -456,7 +456,7 @@ void MainWindow::writeIni()
 	{
 		QMessageBox::warning(
 			this, QApplication::applicationName(),
-			tr("Cannot write file %1:\n%2.")
+            tr("无法读取文件 %1:\n%2.")
 				.arg(QDir::toNativeSeparators(iniPath), file.errorString()));
 		return;
 	}
@@ -475,7 +475,7 @@ void MainWindow::writeIni()
 		{
 			foreach (QString item, iniData.keys())
 			{
-				if (item == "Name")
+                if (item == "Name")
 				{
 					out.setValue(item, "\"" + iniData.value(item).toString() + "\"");
 				}
